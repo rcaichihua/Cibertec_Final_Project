@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Index";
-    int? selectedId = null;
 }
 
 <h2>Index</h2>
@@ -45,7 +44,7 @@
             @Html.ActionLink("Edit", "Edit", new {id = item.BusinessEntityID}) |
             @Html.ActionLink("Details", "Details", new {id = item.BusinessEntityID}) |
             @Html.ActionLink("Delete", "Delete", new {id = item.BusinessEntityID}) |
-            @Ajax.ActionLink(
+            @*@Ajax.ActionLink(
                 "View Emails",
                 "EmailList",
                 new {id=item.BusinessEntityID },
@@ -55,13 +54,13 @@
                     UpdateTargetId = "emailList",
                     HttpMethod = "GET"
                 }
-            )
+            )*@
+            <a href="#" onclick="getModal('/Personal/EmailList/@item.BusinessEntityID');return false;">View Emails</a>            
         </td>
     </tr>
 }
 </table>
-
+@CustomHelpers.GetModal()
 <div id="emailList">
 </div>
-
 @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
