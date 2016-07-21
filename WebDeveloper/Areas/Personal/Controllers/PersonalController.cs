@@ -8,13 +8,13 @@ using WebDeveloper.DataAccess;
 using WebDeveloper.Models;
 using WebDeveloper.Utils;
 
-namespace WebDeveloper.Areas.Person.Controllers
+namespace WebDeveloper.Areas.Personal.Controllers
 {
     [Authorize]
-    public class PersonController : Controller
+    public class PersonalController : Controller
     {
         private readonly PersonRepository _personRepository;
-        public PersonController(PersonRepository personRepository)
+        public PersonalController(PersonRepository personRepository)
         {
             _personRepository = personRepository;
         }
@@ -30,6 +30,11 @@ namespace WebDeveloper.Areas.Person.Controllers
             id.IsNull();
             if(!id.HasValue) return null;
             return PartialView("_EmailList",_personRepository.EmailList(id.Value));
+        }
+
+        public PartialViewResult Create()
+        {
+            return PartialView("_Create");
         }
     }
 }
