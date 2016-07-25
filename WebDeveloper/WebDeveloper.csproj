@@ -228,6 +228,7 @@
       <BrowseToURL>~/App_Code/CustomHelpers.cshtml</BrowseToURL>
     </Content>
     <Content Include="Areas\Personal\Views\Personal\_Create.cshtml" />
+    <Content Include="Areas\Personal\Views\Personal\_Edit.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

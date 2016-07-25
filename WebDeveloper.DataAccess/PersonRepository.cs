@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,27 @@ namespace WebDeveloper.DataAccess
             using (var dbContext = new WebContextDb())
             {
                 return dbContext.EmailAddress.Where(em=> em.BusinessEntityID==id).ToList();
+            }
+        }
+
+        public Person GetPersonId(int id)
+        {
+            using (var dbContext = new WebContextDb())
+            {
+                return dbContext.Person.Where(em => em.BusinessEntityID == id).SingleOrDefault();
+            }
+        }
+
+        public int UpdatePerson(Person person)
+        {
+            using (var dbContext = new WebContextDb())
+            {
+                var eCS = dbContext.Entry(person);
+                eCS.State = EntityState.Modified;
+
+                eCS.Property(x => x.rowguid).IsModified = false;
+                eCS.Property(x => x.Demographics).IsModified = false;
+                return dbContext.SaveChanges();
             }
         }
     }
