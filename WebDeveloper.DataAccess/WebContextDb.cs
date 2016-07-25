@@ -13,6 +13,9 @@ namespace WebDeveloper.DataAccess
     {
         public WebContextDb() : base("WebDeveloperConnectionString")
         {
+            //this.Configuration.AutoDetectChangesEnabled = false;
+            //this.Configuration.ValidateOnSaveEnabled = false;
+            //this.Configuration.LazyLoadingEnabled = false;
         }
 
         public virtual DbSet<Address> Address { get; set; }

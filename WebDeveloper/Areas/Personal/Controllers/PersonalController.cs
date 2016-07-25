@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebDeveloper.DataAccess;
+using WebDeveloper.Model;
 using WebDeveloper.Models;
-//using WebDeveloper.Utils;
 
 namespace WebDeveloper.Areas.Personal.Controllers
 {
@@ -26,15 +26,60 @@ namespace WebDeveloper.Areas.Personal.Controllers
 
         public PartialViewResult EmailList(int? id)
         {
-            //todos son objetos (int, string todos!)
-            //id.IsNull();
             if(!id.HasValue) return null;
             return PartialView("_EmailList",_personRepository.EmailList(id.Value));
         }
-
         public PartialViewResult Create()
         {
             return PartialView("_Create");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Person person)
+        {
+            if (!ModelState.IsValid) return PartialView("_Create", person);
+
+            person.ModifiedDate = DateTime.Now;
+            person.rowguid = Guid.NewGuid();
+
+            person.BusinessEntity = new BusinessEntity
+            {
+                rowguid = person.rowguid,
+                ModifiedDate = person.ModifiedDate
+            };
+
+            _personRepository.Add(person);
+            return RedirectToAction("Index");
+        }
+
+        public PartialViewResult Edit(int? id)
+        {
+            if (!id.HasValue) return null;
+            return PartialView("_Edit", _personRepository.GetPersonId(id.Value));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Person person)
+        {
+            if (!ModelState.IsValid) return PartialView("_Edit", person);
+
+            person.ModifiedDate = DateTime.Now;
+
+            Person personEdit = new Person();
+
+            personEdit = _personRepository.GetPersonId(person.BusinessEntityID);
+
+            person.BusinessEntity = new BusinessEntity
+            {
+                BusinessEntityID=personEdit.BusinessEntityID,
+                rowguid = personEdit.rowguid,
+                ModifiedDate = person.ModifiedDate
+            };
+
+            _personRepository.UpdatePerson(person);
+            return RedirectToAction("Index");
         }
     }
 }

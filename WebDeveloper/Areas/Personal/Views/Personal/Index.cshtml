@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Index";
-    int? selectedId = null;
 }
 
 <h2>Index</h2>
@@ -10,13 +9,11 @@
 @*<p>
     @Html.ActionLink("Create New", "Create")
 </p>*@
-
 <p>
     <a href="#" class="btn btn-success btn-sm" onclick="getModal('Personal/Create');return false;">
         <span class="glyphicon glyphicon-plus"></span> Create New
     </a>
 </p>
-
 <table class="table">
     <tr>
         <th>
@@ -52,7 +49,7 @@
             @*@Html.ActionLink("Edit", "Edit", new {id = item.BusinessEntityID}) |
             @Html.ActionLink("Details", "Details", new {id = item.BusinessEntityID}) |
             @Html.ActionLink("Delete", "Delete", new {id = item.BusinessEntityID}) |*@
-            <a href="#" class="btn btn-success btn-sm">
+            <a href="#" class="btn btn-success btn-sm" onclick="getModal('Personal/Edit/@item.BusinessEntityID');return false;">
                 <span class="glyphicon glyphicon-edit"></span> Edit
             </a>
             <a href="#" class="btn btn-success btn-sm">
@@ -61,7 +58,7 @@
             <a href="#" class="btn btn-danger btn-sm">
                 <span class="glyphicon glyphicon-remove"></span> Delete
             </a>
-            <a href="#" class="btn btn-success btn-sm" onclick="getModal('Personal/EmailList')">
+            <a href="#" class="btn btn-success btn-sm" onclick="getModal('Personal/EmailList/@item.BusinessEntityID');return false;">
                 <span class="glyphicon glyphicon-inbox"></span> Emails
             </a>
             @*@Ajax.ActionLink(
@@ -75,12 +72,12 @@
                     HttpMethod = "GET"
                 }
             )*@
+            @*<a href="#" onclick="getModal('Personal/EmailList/@item.BusinessEntityID');return false;">View Emails</a>*@            
         </td>
     </tr>
 }
 </table>
-
+@CustomHelpers.GetModal()
 <div id="emailList">
 </div>
-
 @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
